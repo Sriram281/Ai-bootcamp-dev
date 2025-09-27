@@ -1,17 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import { Menu, X, Code, ChevronDown, BookOpen, Brain, Eye, MessageSquare, Shield, Briefcase } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import {
+  Menu,
+  X,
+  Code,
+  ChevronDown,
+  BookOpen,
+  Brain,
+  Eye,
+  MessageSquare,
+  Shield,
+  Briefcase,
+} from "lucide-react";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isCoursesHovered, setIsCoursesHovered] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const coursesList = [
@@ -19,35 +32,37 @@ const Header = () => {
       title: "Beginner AI Bootcamp",
       description: "Perfect for those new to AI and machine learning",
       icon: <Brain className="h-4 w-4" />,
-      duration: "12 weeks"
+      duration: "12 weeks",
     },
     {
       title: "Advanced AI Bootcamp",
       description: "Deep dive into cutting-edge AI technologies",
       icon: <BookOpen className="h-4 w-4" />,
-      duration: "16 weeks"
+      duration: "16 weeks",
     },
     {
       title: "Corporate Training",
       description: "Custom AI training solutions for teams",
       icon: <Briefcase className="h-4 w-4" />,
-      duration: "Flexible"
-    }
+      duration: "Flexible",
+    },
   ];
 
   const navLinks = [
-    { name: 'Home', href: '#home' },
-    { name: 'About Us', href: '#about' },
-    { name: 'Programs', href: '#programs', hasDropdown: true },
-    { name: 'Curriculum', href: '#curriculum' },
-    { name: 'Blog/Resources', href: '#blog' },
-    { name: 'Contact Us', href: '#contact' }
+    { name: "Home", href: "/" },
+    { name: "About Us", href: "/about" },
+    { name: "Programs", href: "/programs", hasDropdown: true },
+    { name: "Curriculum", href: "/courses" },
+    { name: "Instructors", href: "/instructors" },
+    { name: "Contact Us", href: "/contact" },
   ];
 
   return (
-    <header className={`fixed w-full z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-transparent'
-    }`}>
+    <header
+      className={`fixed w-full z-50 transition-all duration-300 ${
+        isScrolled ? "bg-white/95 backdrop-blur-md shadow-lg" : "bg-transparent"
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center space-x-2">
@@ -65,39 +80,62 @@ const Header = () => {
               <div
                 key={link.name}
                 className="relative"
-                onMouseEnter={() => link.hasDropdown && setIsCoursesHovered(true)}
-                onMouseLeave={() => link.hasDropdown && setIsCoursesHovered(false)}
+                onMouseEnter={() =>
+                  link.hasDropdown && setIsCoursesHovered(true)
+                }
+                onMouseLeave={() =>
+                  link.hasDropdown && setIsCoursesHovered(false)
+                }
               >
-                <a
-                  href={link.href}
-                  className={`flex items-center transition-colors duration-200 hover:text-blue-600 ${
-                    isScrolled ? 'text-gray-900' : 'text-white'
+                <Link
+                  to={link.href}
+                  className={`flex items-center transition-colors duration-200 hover:text-blue-600 font-medium relative ${
+                     isScrolled
+                      ? "text-gray-900"
+                      : location.pathname === "/"
+                      ? "text-white"
+                      : location.pathname === "/"
+                      ? "text-blue-900"
+                      : "text-blue-900"
                   }`}
                 >
                   {link.name}
                   {link.hasDropdown && (
-                    <ChevronDown className={`h-4 w-4 ml-1 transition-transform duration-200 ${
-                      isCoursesHovered ? 'rotate-180' : ''
-                    }`} />
+                    <ChevronDown
+                      className={`h-4 w-4 ml-1 transition-transform duration-200 ${
+                        isCoursesHovered ? "rotate-180" : ""
+                      }`}
+                    />
                   )}
-                </a>
-                
+
+                  {/* Active indicator */}
+                  {!isScrolled && location.pathname === "/" && link.name === "Home" ? (
+                    <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-white rounded-full"></div>
+                  ) : location.pathname === link.href ? (
+                    <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-blue-600 rounded-full"></div>
+                  ) : (
+                    ""
+                  )}
+                </Link>
+
                 {/* Courses Dropdown */}
                 {link.hasDropdown && (
-                  <div className={`absolute top-full left-0 mt-2 w-80 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden transition-all duration-300 transform ${
-                    isCoursesHovered 
-                      ? 'opacity-100 visible translate-y-0' 
-                      : 'opacity-0 invisible -translate-y-4'
-                  }`}>
+                  <div
+                    className={`absolute top-full left-0 mt-2 w-80 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden transition-all duration-300 transform ${
+                      isCoursesHovered
+                        ? "opacity-100 visible translate-y-0"
+                        : "opacity-0 invisible -translate-y-4"
+                    }`}
+                  >
                     <div className="p-4">
                       <div className="text-sm font-semibold text-gray-900 mb-3 px-2">
                         Our Programs
                       </div>
                       <div className="space-y-1">
                         {coursesList.map((course, index) => (
-                          <a
+                          <Link
                             key={index}
-                            href="#programs"
+                            to="/programs"
                             className="flex items-start p-3 rounded-lg hover:bg-gray-50 transition-colors group"
                           >
                             <div className="flex-shrink-0 text-blue-600 mt-1 group-hover:text-purple-600 transition-colors">
@@ -114,16 +152,16 @@ const Header = () => {
                                 {course.duration}
                               </div>
                             </div>
-                          </a>
+                          </Link>
                         ))}
                       </div>
                       <div className="mt-4 pt-3 border-t border-gray-100">
-                        <a
-                          href="#programs"
+                        <Link
+                          to="/programs"
                           className="block text-center text-sm font-semibold text-blue-600 hover:text-purple-600 transition-colors"
                         >
                           View All Programs →
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -139,10 +177,18 @@ const Header = () => {
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className={`md:hidden p-2 rounded-lg transition-colors ${
-              isScrolled ? 'text-gray-900' : 'text-white'
+              isScrolled
+                ? "text-gray-900"
+                : location.pathname === "/"
+                ? "text-white"
+                : "text-blue-900"
             }`}
           >
-            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {isMenuOpen ? (
+              <X className="h-6 w-6" />
+            ) : (
+              <Menu className="h-6 w-6" />
+            )}
           </button>
         </div>
       </div>
@@ -152,14 +198,18 @@ const Header = () => {
         <div className="md:hidden bg-white/95 backdrop-blur-md border-t">
           <div className="px-4 py-6 space-y-4">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.name}
-                href={link.href}
-                className="block text-gray-900 hover:text-blue-600 transition-colors"
+                to={link.href}
+                className={`block transition-colors font-medium ${
+                  location.pathname === link.href
+                    ? "text-blue-600"
+                    : "text-gray-900 hover:text-blue-600"
+                }`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 {link.name}
-              </a>
+              </Link>
             ))}
             <button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-full font-semibold">
               Enroll Now

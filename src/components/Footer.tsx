@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Code, Facebook, Twitter, Linkedin, Instagram, Mail, ArrowUp } from 'lucide-react';
 
 const Footer = () => {
@@ -8,18 +9,18 @@ const Footer = () => {
 
   const footerLinks = {
     company: [
-      { name: 'About Us', href: '#about' },
+      { name: 'About Us', href: '/about' },
       { name: 'Our Story', href: '#' },
       { name: 'Careers', href: '#' },
       { name: 'Press', href: '#' },
-      { name: 'Blog/Resources', href: '#blog' }
+      { name: 'Blog/Resources', href: '#' }
     ],
     programs: [
-      { name: 'Beginner AI Bootcamp', href: '#programs' },
-      { name: 'Advanced AI Bootcamp', href: '#programs' },
-      { name: 'Corporate Training', href: '#programs' },
+      { name: 'Beginner AI Bootcamp', href: '/programs' },
+      { name: 'Advanced AI Bootcamp', href: '/programs' },
+      { name: 'Corporate Training', href: '/programs' },
       { name: 'Workshops', href: '#' },
-      { name: 'Curriculum', href: '#curriculum' }
+      { name: 'Curriculum', href: '/courses' }
     ],
     support: [
       { name: 'Help Center', href: '#' },
@@ -103,9 +104,15 @@ const Footer = () => {
             <ul className="space-y-2">
               {footerLinks.company.map((link, index) => (
                 <li key={index}>
-                  <a href={link.href} className="text-gray-400 hover:text-white transition-colors">
-                    {link.name}
-                  </a>
+                  {link.href.startsWith('#') ? (
+                    <a href={link.href} className="text-gray-400 hover:text-white transition-colors">
+                      {link.name}
+                    </a>
+                  ) : (
+                    <Link to={link.href} className="text-gray-400 hover:text-white transition-colors">
+                      {link.name}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
@@ -117,9 +124,15 @@ const Footer = () => {
             <ul className="space-y-2">
               {footerLinks.programs.map((link, index) => (
                 <li key={index}>
-                  <a href={link.href} className="text-gray-400 hover:text-white transition-colors">
-                    {link.name}
-                  </a>
+                  {link.href.startsWith('#') ? (
+                    <a href={link.href} className="text-gray-400 hover:text-white transition-colors">
+                      {link.name}
+                    </a>
+                  ) : (
+                    <Link to={link.href} className="text-gray-400 hover:text-white transition-colors">
+                      {link.name}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
@@ -131,9 +144,15 @@ const Footer = () => {
             <ul className="space-y-2">
               {footerLinks.support.map((link, index) => (
                 <li key={index}>
-                  <a href={link.href} className="text-gray-400 hover:text-white transition-colors">
-                    {link.name}
-                  </a>
+                  {link.href.startsWith('#') ? (
+                    <a href={link.href} className="text-gray-400 hover:text-white transition-colors">
+                      {link.name}
+                    </a>
+                  ) : (
+                    <Link to={link.href} className="text-gray-400 hover:text-white transition-colors">
+                      {link.name}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
@@ -145,9 +164,15 @@ const Footer = () => {
             <ul className="space-y-2">
               {footerLinks.legal.map((link, index) => (
                 <li key={index}>
-                  <a href={link.href} className="text-gray-400 hover:text-white transition-colors">
-                    {link.name}
-                  </a>
+                  {link.href.startsWith('#') ? (
+                    <a href={link.href} className="text-gray-400 hover:text-white transition-colors">
+                      {link.name}
+                    </a>
+                  ) : (
+                    <Link to={link.href} className="text-gray-400 hover:text-white transition-colors">
+                      {link.name}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
