@@ -500,7 +500,7 @@ const Programs = () => {
             >
               {/* Popular Badge */}
               {program.popular && (
-                <div className="absolute top-13 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
+                <div className="absolute top-12 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
                   <div className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-2 rounded-full text-sm font-semibold shadow-lg">
                     Most Popular
                   </div>
