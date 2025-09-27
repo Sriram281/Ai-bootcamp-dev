@@ -2,6 +2,7 @@ import React from 'react';
 import { Linkedin, Twitter, Github, Star } from 'lucide-react';
 
 const Instructors = () => {
+  
   const instructors = [
     {
       name: "Dr. Sarah Chen",
